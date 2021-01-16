@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import tn.sarra.ehanoutv1.dao.CategoryRepository;
 import tn.sarra.ehanoutv1.dao.ProductRepository;
 import tn.sarra.ehanoutv1.entities.Category;
@@ -19,16 +20,20 @@ public class EHanoutV1Application implements CommandLineRunner {
     @Autowired
     private CategoryRepository categoryRepository ;
 
+    @Autowired
+    RepositoryRestConfiguration repositoryRestConfiguration;
+
     public static void main(String[] args) {
         SpringApplication.run(EHanoutV1Application.class, args);
     }
 
     @Override
     public void run(String... args) throws Exception {
+        repositoryRestConfiguration.exposeIdsFor(Product.class, Category.class);
 
-        categoryRepository.save(new Category(null, "Computers", null, null));
-        categoryRepository.save(new Category(null, "Printers", null, null));
-        categoryRepository.save(new Category(null, "Smart phones", null, null));
+        categoryRepository.save(new Category(null, "Computers", null, null, null));
+        categoryRepository.save(new Category(null, "Printers", null, null, null));
+        categoryRepository.save(new Category(null, "Smart phones", null, null, null));
 
         Random rnd = new Random();
 
@@ -40,6 +45,7 @@ public class EHanoutV1Application implements CommandLineRunner {
                 p.setAvailable(rnd.nextBoolean());
                 p.setPromotion(rnd.nextBoolean());
                 p.setSelected(rnd.nextBoolean());
+                p.setPhotoName("unknown.png");
                 p.setCategory(c);
                 productRepository.save(p);
             }

@@ -23,6 +23,8 @@ public class Product  implements Serializable {
     private String photoName;
     @ManyToOne
     private Category category;
+    @Transient
+    private int quantity = 1;
 
 
 }

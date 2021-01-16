@@ -11,13 +11,15 @@ public class Category  implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
     private  String name;
+    private String photo;
     private  String description;
     @OneToMany(mappedBy = "category")
     private Collection<Product> products;
 
-    public Category(Long id, String name, String description, Collection<Product> products) {
+    public Category(Long id, String name, String photo, String description, Collection<Product> products) {
         this.id = id;
         this.name = name;
+        this.photo = photo;
         this.description = description;
         this.products = products;
     }
@@ -40,6 +42,14 @@ public class Category  implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     public String getDescription() {
